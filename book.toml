@@ -1,0 +1,9 @@
+[book]
+title = "Over javascript"
+description = "javascript 笔记 https://github.com/overnote/over-javascript"
+author = "ruyuejun"
+
+[output.html]
+mathjax-support = true
+
+[output.epub]

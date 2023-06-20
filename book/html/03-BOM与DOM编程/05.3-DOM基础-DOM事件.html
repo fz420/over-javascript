@@ -1,0 +1,585 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>05.3-DOM 基础-DOM 事件 - Over javascript</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="javascript 笔记 https://github.com/overnote/over-javascript">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/index.html"><strong aria-hidden="true">1.</strong> 01-JavaScript 基础语法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/01.1-JavaScript简介.html"><strong aria-hidden="true">1.1.</strong> 01.1-JavaScript 简介</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/02.1-标识符.html"><strong aria-hidden="true">1.2.</strong> 02.1-标识符</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/03.1-数据类型-数据类型的分类.html"><strong aria-hidden="true">1.3.</strong> 03.1-数据类型-数据类型的分类</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/03.2-数据类型-数据类型的转换.html"><strong aria-hidden="true">1.4.</strong> 03.2-数据类型-数据类型的转换</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/04.1-运算符.html"><strong aria-hidden="true">1.5.</strong> 04.1-运算符</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/05.1-流程控制.html"><strong aria-hidden="true">1.6.</strong> 05.1-流程控制</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/06.1-数组-数组的基本使用.html"><strong aria-hidden="true">1.7.</strong> 06.1-数组-数组的基本使用</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/07.1-函数-函数的基本使用.html"><strong aria-hidden="true">1.8.</strong> 07.1-函数-函数的基本使用</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/07.2-函数-递归与尾调用优化.html"><strong aria-hidden="true">1.9.</strong> 07.2-函数-递归与尾调用优化</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/08.1-作用域-作用域链.html"><strong aria-hidden="true">1.10.</strong> 08.1-作用域-作用域链</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/08.2-作用域-变量提升.html"><strong aria-hidden="true">1.11.</strong> 08.2-作用域-变量提升</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/08.3-作用域-匿名函数与闭包.html"><strong aria-hidden="true">1.12.</strong> 08.3-作用域-匿名函数与闭包</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.1-面向对象-思想概念.html"><strong aria-hidden="true">1.13.</strong> 09.1-面向对象-思想概念</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.2-面向对象-对象的创建方式.html"><strong aria-hidden="true">1.14.</strong> 09.2-面向对象-对象的创建方式</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.3-面向对象-ES6新增class关键字.html"><strong aria-hidden="true">1.15.</strong> 09.3-面向对象-ES6 新增 class 关键字</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.4-面向对象-原型与原型链.html"><strong aria-hidden="true">1.16.</strong> 09.4-面向对象-原型与原型链</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.5-面向对象-三大特性之封装.html"><strong aria-hidden="true">1.17.</strong> 09.5-面向对象-三大特性之封装</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.6-面向对象-三大特性之继承.html"><strong aria-hidden="true">1.18.</strong> 09.6-面向对象-三大特性之继承</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/09.7-面向对象-三大特性之-多态.html"><strong aria-hidden="true">1.19.</strong> 09.7-面向对象-三大特性之-多态</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/10.1-常用内置对象-基本包装类的使用.html"><strong aria-hidden="true">1.20.</strong> 10.1-常用内置对象-基本包装类的使用</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/10.2-常用内置对象-基本包装类String.html"><strong aria-hidden="true">1.21.</strong> 10.2-常用内置对象-基本包装类 String</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/10.3-常用内置对象-Date、Math、Global.html"><strong aria-hidden="true">1.22.</strong> 10.3-常用内置对象-Date、Math、Global</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/10.4-常用内置对象-Function.html"><strong aria-hidden="true">1.23.</strong> 10.4-常用内置对象-Function</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/10.5-常用内置对象-错误对象.html"><strong aria-hidden="true">1.24.</strong> 10.5-常用内置对象-错误对象</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/10.6-常用内置对象-正则表达式.html"><strong aria-hidden="true">1.25.</strong> 10.6-常用内置对象-正则表达式</a></li><li class="chapter-item expanded "><a href="../01-JavaScript基础语法/11.1-基本类型-Symbol.html"><strong aria-hidden="true">1.26.</strong> 11.1-基本类型-Symbol</a></li></ol></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/index.html"><strong aria-hidden="true">2.</strong> 02-JavaScript 语法进阶</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/01.1-语法更迭-JS设计缺陷.html"><strong aria-hidden="true">2.1.</strong> 01.1-语法更迭-JS 设计缺陷</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/01.2-语法更迭-严格模式.html"><strong aria-hidden="true">2.2.</strong> 01.2-语法更迭-严格模式</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/01.3-语法更迭-ES6的改进.html"><strong aria-hidden="true">2.3.</strong> 01.3-语法更迭-ES6 的改进</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/02.1-基类Object-基本使用.html"><strong aria-hidden="true">2.4.</strong> 02.1-基类 Object-基本使用</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/02.2-基类Object-限制对象成员.html"><strong aria-hidden="true">2.5.</strong> 02.2-基类 Object-限制对象成员</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/03.1-对象操作-对象的检测.html"><strong aria-hidden="true">2.6.</strong> 03.1-对象操作-对象的检测</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/03.2-对象操作-对象的迭代合并与扩展.html"><strong aria-hidden="true">2.7.</strong> 03.2-对象操作-对象的迭代合并与扩展</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/03.3-对象操作-对象的拷贝.html"><strong aria-hidden="true">2.8.</strong> 03.3-对象操作-对象的拷贝</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/03.4-对象操作-对象的使用细节优化.html"><strong aria-hidden="true">2.9.</strong> 03.4-对象操作-对象的使用细节优化</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/04.1-容器对象-Array.html"><strong aria-hidden="true">2.10.</strong> 04.1-容器对象-Array</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/04.2-容器对象-Map与WeakMap.html"><strong aria-hidden="true">2.11.</strong> 04.2-容器对象-Map 与 WeakMap</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/04.3-容器对象-Set与WeakSet.html"><strong aria-hidden="true">2.12.</strong> 04.3-容器对象-Set 与 WeakSet</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/04.4-容器对象-定型数组.html"><strong aria-hidden="true">2.13.</strong> 04.4-容器对象-定型数组</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/05.1-迭代器与生成器-Iterator.html"><strong aria-hidden="true">2.14.</strong> 05.1-迭代器与生成器-Iterator</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/05.2-迭代器与生成器-Generator.html"><strong aria-hidden="true">2.15.</strong> 05.2-迭代器与生成器-Generator</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/06.1-异步编程-Promise基础.html"><strong aria-hidden="true">2.16.</strong> 06.1-异步编程-Promise 基础</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/06.2-异步编程-Promise其他设置.html"><strong aria-hidden="true">2.17.</strong> 06.2-异步编程-Promise 其他设置</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/06.3-异步编程-async与await.html"><strong aria-hidden="true">2.18.</strong> 06.3-异步编程-async 与 await</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/06.4-异步编程-异步迭代.html"><strong aria-hidden="true">2.19.</strong> 06.4-异步编程-异步迭代</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/07.1-代理与反射-代理.html"><strong aria-hidden="true">2.20.</strong> 07.1-代理与反射-代理</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/07.2-代理与反射-反射.html"><strong aria-hidden="true">2.21.</strong> 07.2-代理与反射-反射</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/07.3-代理与反射-捕获器API.html"><strong aria-hidden="true">2.22.</strong> 07.3-代理与反射-捕获器 API</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/07.4-代理与反射-代理的常见使用场景.html"><strong aria-hidden="true">2.23.</strong> 07.4-代理与反射-代理的常见使用场景</a></li><li class="chapter-item expanded "><a href="../02-JavaScript语法进阶/附-ES规范.html"><strong aria-hidden="true">2.24.</strong> 附-ES 规范</a></li></ol></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/index.html"><strong aria-hidden="true">3.</strong> 03-BOM 与 DOM 编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/01.1-JavaScript在HTML中的使用.html"><strong aria-hidden="true">3.1.</strong> 01.1-JavaScript 在 HTML 中的使用</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/02.1-DOM与BOM概述.html"><strong aria-hidden="true">3.2.</strong> 02.1-DOM 与 BOM 概述</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/03.1-BOM-核心对象window.html"><strong aria-hidden="true">3.3.</strong> 03.1-BOM-核心对象 window</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/03.2-BOM-BOM的常见对象.html"><strong aria-hidden="true">3.4.</strong> 03.2-BOM-BOM 的常见对象</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/04.1-客户端检测.html"><strong aria-hidden="true">3.5.</strong> 04.1-客户端检测</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.1-DOM基础-DOM节点.html"><strong aria-hidden="true">3.6.</strong> 05.1-DOM 基础-DOM 节点</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.2-DOM基础-元素的增删改查.html"><strong aria-hidden="true">3.7.</strong> 05.2-DOM 基础-元素的增删改查</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.3-DOM基础-DOM事件.html" class="active"><strong aria-hidden="true">3.8.</strong> 05.3-DOM 基础-DOM 事件</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.4-DOM基础-事件流.html"><strong aria-hidden="true">3.9.</strong> 05.4-DOM 基础-事件流</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.5-DOM基础-坐标操作.html"><strong aria-hidden="true">3.10.</strong> 05.5-DOM 基础-坐标操作</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.6-DOM基础-范围操作.html"><strong aria-hidden="true">3.11.</strong> 05.6-DOM 基础-范围操作</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/05.7-DOM基础-MutationObserver.html"><strong aria-hidden="true">3.12.</strong> 05.7-DOM 基础-MutationObserver</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/06.1-表单-表单基础操作.html"><strong aria-hidden="true">3.13.</strong> 06.1-表单-表单基础操作</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/06.2-表单-文本框input与textarea.html"><strong aria-hidden="true">3.14.</strong> 06.2-表单-文本框 input 与 textarea</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/06.3-表单-选择框select.html"><strong aria-hidden="true">3.15.</strong> 06.3-表单-选择框 select</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/06.4-表单-表单提交操作.html"><strong aria-hidden="true">3.16.</strong> 06.4-表单-表单提交操作</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/06.5-表单-富文本编辑.html"><strong aria-hidden="true">3.17.</strong> 06.5-表单-富文本编辑</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/07.1-H5新功能-DOM操作变化.html"><strong aria-hidden="true">3.18.</strong> 07.1-H5 新功能-DOM 操作变化</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/07.2-H5新功能-跨文档通信与通知.html"><strong aria-hidden="true">3.19.</strong> 07.2-H5 新功能-跨文档通信与通知</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/07.3-H5新功能-媒体元素.html"><strong aria-hidden="true">3.20.</strong> 07.3-H5 新功能-媒体元素</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/07.4-H5新功能-原生拖放.html"><strong aria-hidden="true">3.21.</strong> 07.4-H5 新功能-原生拖放</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/07.5-H5新功能-动画.html"><strong aria-hidden="true">3.22.</strong> 07.5-H5 新功能-动画</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/07.6-H5新功能-计时 API.html"><strong aria-hidden="true">3.23.</strong> 07.6-H5 新功能-计时 API</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/08.1-H5组件化开发-HTML模板.html"><strong aria-hidden="true">3.24.</strong> 08.1-H5 组件化开发-HTML 模板</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/08.2-H5组件化开发-ShawdowDOM.html"><strong aria-hidden="true">3.25.</strong> 08.2-H5 组件化开发-ShawdowDOM</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/08.3-H5组件化开发-自定义元素.html"><strong aria-hidden="true">3.26.</strong> 08.3-H5 组件化开发-自定义元素</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/附录1-jQuery的基础使用.html"><strong aria-hidden="true">3.27.</strong> 附录 1-jQuery 的基础使用</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/附录2-jQuery的开发思想与技巧.html"><strong aria-hidden="true">3.28.</strong> 附录 2-jQuery 的开发思想与技巧</a></li><li class="chapter-item expanded "><a href="../03-BOM与DOM编程/附录3-DOM事件汇总.html"><strong aria-hidden="true">3.29.</strong> 附录 3-DOM 事件汇总</a></li></ol></li><li class="chapter-item expanded "><a href="../04-网络编程/index.html"><strong aria-hidden="true">4.</strong> 04-网络编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../04-网络编程/01.1-计算机网络简介.html"><strong aria-hidden="true">4.1.</strong> 01.1-计算机网络简介</a></li><li class="chapter-item expanded "><a href="../04-网络编程/02.1-Http协议.html"><strong aria-hidden="true">4.2.</strong> 02.1-Http 协议</a></li><li class="chapter-item expanded "><a href="../04-网络编程/03.1-Web开发介绍.html"><strong aria-hidden="true">4.3.</strong> 03.1-Web 开发介绍</a></li><li class="chapter-item expanded "><a href="../04-网络编程/04.1-数据交互协议-JSON.html"><strong aria-hidden="true">4.4.</strong> 04.1-数据交互协议-JSON</a></li><li class="chapter-item expanded "><a href="../04-网络编程/04.2-数据交互协议-XML.html"><strong aria-hidden="true">4.5.</strong> 04.2-数据交互协议-XML</a></li><li class="chapter-item expanded "><a href="../04-网络编程/05.1-Ajax的XHR API-XHR对象.html"><strong aria-hidden="true">4.6.</strong> 05.1-Ajax 的 XHR API-XHR 对象</a></li><li class="chapter-item expanded "><a href="../04-网络编程/05.2-Ajax的XHR_API-XHR_Level_2.html"><strong aria-hidden="true">4.7.</strong> 05.2-Ajax 的 XHR API-XHR Level 2</a></li><li class="chapter-item expanded "><a href="../04-网络编程/06.1-Ajax的fetch API-fetch用法.html"><strong aria-hidden="true">4.8.</strong> 06.1-Ajax 的 fetch API-fetch 用法</a></li><li class="chapter-item expanded "><a href="../04-网络编程/06.2-Ajax的fetch API-三大对象.html"><strong aria-hidden="true">4.9.</strong> 06.2-Ajax 的 fetch API-三大对象</a></li><li class="chapter-item expanded "><a href="../04-网络编程/06.3-Ajax的fetch API-fetch的Body混入.html"><strong aria-hidden="true">4.10.</strong> 06.3-Ajax 的 fetch API-fetch 的 Body 混入</a></li><li class="chapter-item expanded "><a href="../04-网络编程/07.1-跨域问题-跨域资源共享.html"><strong aria-hidden="true">4.11.</strong> 07.1-跨域问题-跨域资源共享</a></li><li class="chapter-item expanded "><a href="../04-网络编程/07.2-跨域问题-替代性跨源技术.html"><strong aria-hidden="true">4.12.</strong> 07.2-跨域问题-替代性跨源技术</a></li><li class="chapter-item expanded "><a href="../04-网络编程/08.1-WebSocket.html"><strong aria-hidden="true">4.13.</strong> 08.1-WebSocket</a></li><li class="chapter-item expanded "><a href="../04-网络编程/09.1-客户端存储-cookie.html"><strong aria-hidden="true">4.14.</strong> 09.1-客户端存储-cookie</a></li><li class="chapter-item expanded "><a href="../04-网络编程/09.2-客户端存储-WebStorage.html"><strong aria-hidden="true">4.15.</strong> 09.2-客户端存储-WebStorage</a></li><li class="chapter-item expanded "><a href="../04-网络编程/09.3-客户端存储-IndexedDB.html"><strong aria-hidden="true">4.16.</strong> 09.3-客户端存储-IndexedDB</a></li><li class="chapter-item expanded "><a href="../04-网络编程/10.1-JavaScriptAPI-Encoding编码解码.html"><strong aria-hidden="true">4.17.</strong> 10.1-JavaScriptAPI-Encoding 编码解码</a></li><li class="chapter-item expanded "><a href="../04-网络编程/10.2-JavaScriptAPI-文件对象.html"><strong aria-hidden="true">4.18.</strong> 10.2-JavaScriptAPI-文件对象</a></li><li class="chapter-item expanded "><a href="../04-网络编程/10.3-JavaScriptAPI-Stream流对象.html"><strong aria-hidden="true">4.19.</strong> 10.3-JavaScriptAPI-Stream 流对象</a></li><li class="chapter-item expanded "><a href="../04-网络编程/10.4-JavaScriptAPI-Web加密对象.html"><strong aria-hidden="true">4.20.</strong> 10.4-JavaScriptAPI-Web 加密对象</a></li><li class="chapter-item expanded "><a href="../04-网络编程/附录-网络开发常见问题.html"><strong aria-hidden="true">4.21.</strong> 附录-网络开发常见问题</a></li></ol></li><li class="chapter-item expanded "><a href="../05-Node.js/index.html"><strong aria-hidden="true">5.</strong> 05-Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../05-Node.js/01.1-Node简介.html"><strong aria-hidden="true">5.1.</strong> 01.1-Node 简介</a></li><li class="chapter-item expanded "><a href="../05-Node.js/02.1-常见核心模块.html"><strong aria-hidden="true">5.2.</strong> 02.1-常见核心模块</a></li><li class="chapter-item expanded "><a href="../05-Node.js/03.1-使用机制-模块机制.html"><strong aria-hidden="true">5.3.</strong> 03.1-使用机制-模块机制</a></li><li class="chapter-item expanded "><a href="../05-Node.js/03.2-使用机制-包管理机制.html"><strong aria-hidden="true">5.4.</strong> 03.2-使用机制-包管理机制</a></li><li class="chapter-item expanded "><a href="../05-Node.js/04.1-新增对象-Buffer.html"><strong aria-hidden="true">5.5.</strong> 04.1-新增对象-Buffer</a></li><li class="chapter-item expanded "><a href="../05-Node.js/04.2-新增对象-Stream.html"><strong aria-hidden="true">5.6.</strong> 04.2-新增对象-Stream</a></li><li class="chapter-item expanded "><a href="../05-Node.js/05.1-网络编程.html"><strong aria-hidden="true">5.7.</strong> 05.1-网络编程</a></li><li class="chapter-item expanded "><a href="../05-Node.js/06.1-Web功能-http服务.html"><strong aria-hidden="true">5.8.</strong> 06.1-Web 功能-http 服务</a></li><li class="chapter-item expanded "><a href="../05-Node.js/06.2-Web功能-路由解析.html"><strong aria-hidden="true">5.9.</strong> 06.2-Web 功能-路由解析</a></li><li class="chapter-item expanded "><a href="../05-Node.js/06.3-Web功能-静态服务.html"><strong aria-hidden="true">5.10.</strong> 06.3-Web 功能-静态服务</a></li><li class="chapter-item expanded "><a href="../05-Node.js/06.4-Web功能-视图渲染.html"><strong aria-hidden="true">5.11.</strong> 06.4-Web 功能-视图渲染</a></li><li class="chapter-item expanded "><a href="../05-Node.js/06.5-Web功能-文件上传.html"><strong aria-hidden="true">5.12.</strong> 06.5-Web 功能-文件上传</a></li><li class="chapter-item expanded "><a href="../05-Node.js/07.1-Web框架-Express.html"><strong aria-hidden="true">5.13.</strong> 07.1-Web 框架-Express</a></li><li class="chapter-item expanded "><a href="../05-Node.js/07.2-Web框架-Koa.html"><strong aria-hidden="true">5.14.</strong> 07.2-Web 框架-Koa</a></li><li class="chapter-item expanded "><a href="../05-Node.js/08.1-鉴权-Cookie.html"><strong aria-hidden="true">5.15.</strong> 08.1-鉴权-Cookie</a></li><li class="chapter-item expanded "><a href="../05-Node.js/08.2-鉴权-Session.html"><strong aria-hidden="true">5.16.</strong> 08.2-鉴权-Session</a></li><li class="chapter-item expanded "><a href="../05-Node.js/08.3-鉴权-JWT.html"><strong aria-hidden="true">5.17.</strong> 08.3-鉴权-JWT</a></li><li class="chapter-item expanded "><a href="../05-Node.js/09.1-Node连接数据库.html"><strong aria-hidden="true">5.18.</strong> 09.1-Node 连接数据库</a></li><li class="chapter-item expanded "><a href="../05-Node.js/10.1-异常机制-错误处理.html"><strong aria-hidden="true">5.19.</strong> 10.1-异常机制-错误处理</a></li><li class="chapter-item expanded "><a href="../05-Node.js/10.2-异常机制-日志功能.html"><strong aria-hidden="true">5.20.</strong> 10.2-异常机制-日志功能</a></li><li class="chapter-item expanded "><a href="../05-Node.js/11.1-WebSocket.html"><strong aria-hidden="true">5.21.</strong> 11.1-WebSocket</a></li><li class="chapter-item expanded "><a href="../05-Node.js/12.1-Node与加密-密码学.html"><strong aria-hidden="true">5.22.</strong> 12.1-Node 与加密-密码学</a></li><li class="chapter-item expanded "><a href="../05-Node.js/12.2-Node与加密-加密通信.html"><strong aria-hidden="true">5.23.</strong> 12.2-Node 与加密-加密通信</a></li></ol></li><li class="chapter-item expanded "><a href="../06-并发编程/index.html"><strong aria-hidden="true">6.</strong> 06-并发编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../06-并发编程/01.1-并发的概念.html"><strong aria-hidden="true">6.1.</strong> 01.1-并发的概念</a></li><li class="chapter-item expanded "><a href="../06-并发编程/02.1-并发模型-多进程.html"><strong aria-hidden="true">6.2.</strong> 02.1-并发模型-多进程</a></li><li class="chapter-item expanded "><a href="../06-并发编程/02.2-并发模型-多线程.html"><strong aria-hidden="true">6.3.</strong> 02.2-并发模型-多线程</a></li><li class="chapter-item expanded "><a href="../06-并发编程/02.3-并发模型-非阻塞IO.html"><strong aria-hidden="true">6.4.</strong> 02.3-并发模型-非阻塞 IO</a></li><li class="chapter-item expanded "><a href="../06-并发编程/02.4-并发模型-协程.html"><strong aria-hidden="true">6.5.</strong> 02.4-并发模型-协程</a></li><li class="chapter-item expanded "><a href="../06-并发编程/02.5-并发模型-模型对比.html"><strong aria-hidden="true">6.6.</strong> 02.5-并发模型-模型对比</a></li><li class="chapter-item expanded "><a href="../06-并发编程/03.1-事件循环-浏览器事件循环.html"><strong aria-hidden="true">6.7.</strong> 03.1-事件循环-浏览器事件循环</a></li><li class="chapter-item expanded "><a href="../06-并发编程/03.2-事件循环-Node事件循环.html"><strong aria-hidden="true">6.8.</strong> 03.2-事件循环-Node 事件循环</a></li><li class="chapter-item expanded "><a href="../06-并发编程/03.3-事件循环-Node的事件模块.html"><strong aria-hidden="true">6.9.</strong> 03.3-事件循环-Node 的事件模块</a></li><li class="chapter-item expanded "><a href="../06-并发编程/04.1-Node的多进程-进程对象process.html"><strong aria-hidden="true">6.10.</strong> 04.1-Node 的多进程-进程对象 process</a></li><li class="chapter-item expanded "><a href="../06-并发编程/04.2-Node的多进程-创建进程.html"><strong aria-hidden="true">6.11.</strong> 04.2-Node 的多进程-创建进程</a></li><li class="chapter-item expanded "><a href="../06-并发编程/04.3-Node的多进程-进程间通信.html"><strong aria-hidden="true">6.12.</strong> 04.3-Node 的多进程-进程间通信</a></li><li class="chapter-item expanded "><a href="../06-并发编程/04.4-Node的多进程-多进程服务部署.html"><strong aria-hidden="true">6.13.</strong> 04.4-Node 的多进程-多进程服务部署</a></li><li class="chapter-item expanded "><a href="../06-并发编程/04.5-Node的多进程-集群模块cluster.html"><strong aria-hidden="true">6.14.</strong> 04.5-Node 的多进程-集群模块 cluster</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.1-JS的多线程-工作者线程概念.html"><strong aria-hidden="true">6.15.</strong> 05.1-JS 的多线程-工作者线程概念</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.2-JS的多线程-专用工作者线程的基本使用.html"><strong aria-hidden="true">6.16.</strong> 05.2-JS 的多线程-专用工作者线程的基本使用</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.3-JS的多线程-专用工作者线程的通信.html"><strong aria-hidden="true">6.17.</strong> 05.3-JS 的多线程-专用工作者线程的通信</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.4-JS的多线程-共享工作者线程.html"><strong aria-hidden="true">6.18.</strong> 05.4-JS 的多线程-共享工作者线程</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.5-JS的多线程-服务工作者线程的基本使用.html"><strong aria-hidden="true">6.19.</strong> 05.5-JS 的多线程-服务工作者线程的基本使用</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.6-JS的多线程-服务工作者线程的线程缓存.html"><strong aria-hidden="true">6.20.</strong> 05.6-JS 的多线程-服务工作者线程的线程缓存</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.7-JS的多线程-服务工作者线程的生命周期.html"><strong aria-hidden="true">6.21.</strong> 05.7-JS 的多线程-服务工作者线程的生命周期</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.8-JS的多线程-服务工作者线程的补充.html"><strong aria-hidden="true">6.22.</strong> 05.8-JS 的多线程-服务工作者线程的补充</a></li><li class="chapter-item expanded "><a href="../06-并发编程/05.9-JS的多线程-竞争锁.html"><strong aria-hidden="true">6.23.</strong> 05.9-JS 的多线程-竞争锁</a></li></ol></li><li class="chapter-item expanded "><a href="../07-前端工程化/index.html"><strong aria-hidden="true">7.</strong> 07-前端工程化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../07-前端工程化/01.1-模块系统-理解模块系统.html"><strong aria-hidden="true">7.1.</strong> 01.1-模块系统-理解模块系统</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/01.2-模块系统-模块化方案.html"><strong aria-hidden="true">7.2.</strong> 01.2-模块系统-模块化方案</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/01.3-模块系统-ESModule.html"><strong aria-hidden="true">7.3.</strong> 01.3-模块系统-ESModule</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/02.1-工作流工具-Gulp.html"><strong aria-hidden="true">7.4.</strong> 02.1-工作流工具-Gulp</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/03.1-Webpack简介.html"><strong aria-hidden="true">7.5.</strong> 03.1-Webpack 简介</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/03.2-Webpack基础-基础配置.html"><strong aria-hidden="true">7.6.</strong> 03.2-Webpack 基础-基础配置</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/03.3-Webpack基础-模块加载器loader.html"><strong aria-hidden="true">7.7.</strong> 03.3-Webpack 基础-模块加载器 loader</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/03.4-Webpack基础-插件plugin.html"><strong aria-hidden="true">7.8.</strong> 03.4-Webpack 基础-插件 plugin</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/03.5-Webpack基础-babel配置.html"><strong aria-hidden="true">7.9.</strong> 03.5-Webpack 基础-babel 配置</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/04.1-Webpack优化-开发环境优化.html"><strong aria-hidden="true">7.10.</strong> 04.1-Webpack 优化-开发环境优化</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/04.2-Webpack优化-生产环境优化.html"><strong aria-hidden="true">7.11.</strong> 04.2-Webpack 优化-生产环境优化</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/04.3-Webpack优化-代码分割.html"><strong aria-hidden="true">7.12.</strong> 04.3-Webpack 优化-代码分割</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/04.4-Webpack优化-其他打包配置.html"><strong aria-hidden="true">7.13.</strong> 04.4-Webpack 优化-其他打包配置</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/05.1-环境配置示例-格式化配置.html"><strong aria-hidden="true">7.14.</strong> 05.1-环境配置示例-格式化配置</a></li><li class="chapter-item expanded "><a href="../07-前端工程化/05.2-环境配置示例-env配置.html"><strong aria-hidden="true">7.15.</strong> 05.2-环境配置示例-env 配置</a></li></ol></li><li class="chapter-item expanded "><a href="../08-TypeScript/index.html"><strong aria-hidden="true">8.</strong> 08 Type Script</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../08-TypeScript/01.1-TypeScript简介.html"><strong aria-hidden="true">8.1.</strong> 01.1-TypeScript 简介</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/02.1-数据类型.html"><strong aria-hidden="true">8.2.</strong> 02.1-数据类型</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/03.1-函数.html"><strong aria-hidden="true">8.3.</strong> 03.1-函数</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/04.1-面向对象.html"><strong aria-hidden="true">8.4.</strong> 04.1-面向对象</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/05.1-接口.html"><strong aria-hidden="true">8.5.</strong> 05.1-接口</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/06.1-命名空间.html"><strong aria-hidden="true">8.6.</strong> 06.1-命名空间</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/07.1-泛型.html"><strong aria-hidden="true">8.7.</strong> 07.1-泛型</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/08.1-类型增强.html"><strong aria-hidden="true">8.8.</strong> 08.1-类型增强</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/09.1-装饰器.html"><strong aria-hidden="true">8.9.</strong> 09.1-装饰器</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/11.1-错误处理.html"><strong aria-hidden="true">8.10.</strong> 11.1-错误处理</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/12.1-并发中的类型设计.html"><strong aria-hidden="true">8.11.</strong> 12.1-并发中的类型设计</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/13.1-TS与JS的互操作.html"><strong aria-hidden="true">8.12.</strong> 13.1-TS 与 JS 的互操作</a></li><li class="chapter-item expanded "><a href="../08-TypeScript/附录-实用类型.html"><strong aria-hidden="true">8.13.</strong> 附录-实用类型</a></li></ol></li><li class="chapter-item expanded "><a href="../09-前端框架-React/index.html"><strong aria-hidden="true">9.</strong> 09-前端框架-React</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../09-前端框架-React/01.1-React简介.html"><strong aria-hidden="true">9.1.</strong> 01.1-React 简介</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/02.1-JSX-语法规范.html"><strong aria-hidden="true">9.2.</strong> 02.1-JSX-语法规范</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/02.2-JSX-渲染React元素.html"><strong aria-hidden="true">9.3.</strong> 02.2-JSX-渲染 React 元素</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/03.1-组件化开发-组件化思想.html"><strong aria-hidden="true">9.4.</strong> 03.1-组件化开发-组件化思想</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/03.2-组件化开发-state组件状态.html"><strong aria-hidden="true">9.5.</strong> 03.2-组件化开发-state 组件状态</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/03.3-组件化开发-props接受参数.html"><strong aria-hidden="true">9.6.</strong> 03.3-组件化开发-props 接受参数</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/03.4-组件化开发-refs获取原生DOM.html"><strong aria-hidden="true">9.7.</strong> 03.4-组件化开发-refs 获取原生 DOM</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/04.1-常见操作-事件处理.html"><strong aria-hidden="true">9.8.</strong> 04.1-常见操作-事件处理</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/04.2-常见操作-条件渲染.html"><strong aria-hidden="true">9.9.</strong> 04.2-常见操作-条件渲染</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/04.3-常见操作-列表渲染.html"><strong aria-hidden="true">9.10.</strong> 04.3-常见操作-列表渲染</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/04.4-常见操作-表单与受控组件.html"><strong aria-hidden="true">9.11.</strong> 04.4-常见操作-表单与受控组件</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/04.5-常见操作-组合模式.html"><strong aria-hidden="true">9.12.</strong> 04.5-常见操作-组合模式</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/05.1-组件数据传递-父子传值.html"><strong aria-hidden="true">9.13.</strong> 05.1-组件数据传递-父子传值</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/05.2-组件数据传递-Context.html"><strong aria-hidden="true">9.14.</strong> 05.2-组件数据传递-Context</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/06.1-React路由-基础使用.html"><strong aria-hidden="true">9.15.</strong> 06.1-React 路由-基础使用</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/06.2-React路由-路由嵌套懒加载与编程式导航.html"><strong aria-hidden="true">9.16.</strong> 06.2-React 路由-路由嵌套懒加载与编程式导航</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/07.1-React生命周期-钩子方法.html"><strong aria-hidden="true">9.17.</strong> 07.1-React 生命周期-钩子方法</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/07.2-React生命周期-常用操作.html"><strong aria-hidden="true">9.18.</strong> 07.2-React 生命周期-常用操作</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/08.1-深入HooksAPI-使用规范.html"><strong aria-hidden="true">9.19.</strong> 08.1-深入 HooksAPI-使用规范</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/08.2-深入HooksAPI-自定义Hook.html"><strong aria-hidden="true">9.20.</strong> 08.2-深入 HooksAPI-自定义 Hook</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/08.3-深入HooksAPI-其他常用Hooks.html"><strong aria-hidden="true">9.21.</strong> 08.3-深入 HooksAPI-其他常用 Hooks</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/09.1-状态管理Redux.html"><strong aria-hidden="true">9.22.</strong> 09.1-状态管理 Redux</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/10.1-React进阶-高阶组件.html"><strong aria-hidden="true">9.23.</strong> 10.1-React 进阶-高阶组件</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/10.2-React进阶-RenderProps.html"><strong aria-hidden="true">9.24.</strong> 10.2-React 进阶-RenderProps</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/10.3-React进阶-Diffing算法.html"><strong aria-hidden="true">9.25.</strong> 10.3-React 进阶-Diffing 算法</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/10.4-React进阶-性能优化.html"><strong aria-hidden="true">9.26.</strong> 10.4-React 进阶-性能优化</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/10.5-React进阶-派生state.html"><strong aria-hidden="true">9.27.</strong> 10.5-React 进阶-派生 state</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/10.6-React进阶-代码分割与Suspense.html"><strong aria-hidden="true">9.28.</strong> 10.6-React 进阶-代码分割与 Suspense</a></li><li class="chapter-item expanded "><a href="../09-前端框架-React/11.1-React项目测试.html"><strong aria-hidden="true">9.29.</strong> 11.1-React 项目测试</a></li></ol></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/index.html"><strong aria-hidden="true">10.</strong> 09-前端框架-Vue</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../09-前端框架-Vue/01.1-Vue简介.html"><strong aria-hidden="true">10.1.</strong> 01.1-Vue 简介</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/02.1-模板语法-常用指令.html"><strong aria-hidden="true">10.2.</strong> 02.1-模板语法-常用指令</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/02.2-模板语法-双向绑定与自定义指令.html"><strong aria-hidden="true">10.3.</strong> 02.2-模板语法-双向绑定与自定义指令</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/02.3-模板语法-自定义指令.html"><strong aria-hidden="true">10.4.</strong> 02.3-模板语法-自定义指令</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.1-组件基础-组件注册.html"><strong aria-hidden="true">10.5.</strong> 03.1-组件基础-组件注册</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.2-组件基础-Vue实例.html"><strong aria-hidden="true">10.6.</strong> 03.2-组件基础-Vue 实例</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.3-组件基础-响应式基础.html"><strong aria-hidden="true">10.7.</strong> 03.3-组件基础-响应式基础</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.4-组件基础-组件参数Props.html"><strong aria-hidden="true">10.8.</strong> 03.4-组件基础-组件参数 Props</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.5-组件基础-模板引用ref.html"><strong aria-hidden="true">10.9.</strong> 03.5-组件基础-模板引用 ref</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.6-组件基础-计算属性.html"><strong aria-hidden="true">10.10.</strong> 03.6-组件基础-计算属性</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/03.7-组件基础-侦听器.html"><strong aria-hidden="true">10.11.</strong> 03.7-组件基础-侦听器</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/04.1-常见操作-事件操作.html"><strong aria-hidden="true">10.12.</strong> 04.1-常见操作-事件操作</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/04.2-常见操作-绑定样式.html"><strong aria-hidden="true">10.13.</strong> 04.2-常见操作-绑定样式</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/04.3-常见操作-列表渲染.html"><strong aria-hidden="true">10.14.</strong> 04.3-常见操作-列表渲染</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/04.4-常见操作-透传Attributes.html"><strong aria-hidden="true">10.15.</strong> 04.4-常见操作-透传 Attributes</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/04.5-常见操作-组件v-model.html"><strong aria-hidden="true">10.16.</strong> 04.5-常见操作-组件 v-model</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/05.1-组件通信-基础通信方式.html"><strong aria-hidden="true">10.17.</strong> 05.1-组件通信-基础通信方式</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/05.2-组件通信-依赖注入.html"><strong aria-hidden="true">10.18.</strong> 05.2-组件通信-依赖注入</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/06.1-Vue生命周期.html"><strong aria-hidden="true">10.19.</strong> 06.1-Vue 生命周期</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/07.1-Vue插槽slot.html"><strong aria-hidden="true">10.20.</strong> 07.1-Vue 插槽 slot</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/08.1-组合式API-Vue3与组合式API.html"><strong aria-hidden="true">10.21.</strong> 08.1-组合式 API-Vue3 与组合式 API</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/08.2-组合式API-最佳实践.html"><strong aria-hidden="true">10.22.</strong> 08.2-组合式 API-最佳实践</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/08.3-组合式API-常见组合式API原理.html"><strong aria-hidden="true">10.23.</strong> 08.3-组合式 API-常见组合式 API 原理</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/08.4-组合式API-组合式API的利弊.html"><strong aria-hidden="true">10.24.</strong> 08.4-组合式 API-组合式 API 的利弊</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/09.1-路由-前端路由.html"><strong aria-hidden="true">10.25.</strong> 09.1-路由-前端路由</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/09.2-路由-VueRouter.html"><strong aria-hidden="true">10.26.</strong> 09.2-路由-VueRouter</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/09.3-路由-路由守卫.html"><strong aria-hidden="true">10.27.</strong> 09.3-路由-路由守卫</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/10.1-内置组件-异步组件与Suspense.html"><strong aria-hidden="true">10.28.</strong> 10.1-内置组件-异步组件与 Suspense</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/10.2-内置组件-KeepAlive.html"><strong aria-hidden="true">10.29.</strong> 10.2-内置组件-KeepAlive</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/10.3-内置组件-Teleport.html"><strong aria-hidden="true">10.30.</strong> 10.3-内置组件-Teleport</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/11.1-状态管理-状态与Pinia.html"><strong aria-hidden="true">10.31.</strong> 11.1-状态管理-状态与 Pinia</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/11.2-状态管理-Vuex.html"><strong aria-hidden="true">10.32.</strong> 11.2-状态管理-Vuex</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/12.1-Vue插件编写.html"><strong aria-hidden="true">10.33.</strong> 12.1-Vue 插件编写</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/13.1-Vue动画.html"><strong aria-hidden="true">10.34.</strong> 13.1-Vue 动画</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/14.1-Vue服务端渲染.html"><strong aria-hidden="true">10.35.</strong> 14.1-Vue 服务端渲染</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/15.1-Vue测试.html"><strong aria-hidden="true">10.36.</strong> 15.1-Vue 测试</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/16.1-Vue性能优化.html"><strong aria-hidden="true">10.37.</strong> 16.1-Vue 性能优化</a></li><li class="chapter-item expanded "><a href="../09-前端框架-Vue/17.1-TypeScript与Vue结合.html"><strong aria-hidden="true">10.38.</strong> 17.1-TypeScript 与 Vue 结合</a></li></ol></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/index.html"><strong aria-hidden="true">11.</strong> 09-后端框架-Nest</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../09-后端框架-Nest/01.1-Nestjs框架基础.html"><strong aria-hidden="true">11.1.</strong> 01.1-Nestjs 框架基础</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/02.1-Nestjs设计思想-控制反转与切面编程.html"><strong aria-hidden="true">11.2.</strong> 02.1-Nestjs 设计思想-控制反转与切面编程</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/02.2-Nestjs设计思想-核心概念.html"><strong aria-hidden="true">11.3.</strong> 02.2-Nestjs 设计思想-核心概念</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/03.1-Nestjs主要功能-中间件.html"><strong aria-hidden="true">11.4.</strong> 03.1-Nestjs 主要功能-中间件</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/03.2-Nestjs主要功能-异常过滤器.html"><strong aria-hidden="true">11.5.</strong> 03.2-Nestjs 主要功能-异常过滤器</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/03.3-Nestjs主要功能-管道.html"><strong aria-hidden="true">11.6.</strong> 03.3-Nestjs 主要功能-管道</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/03.4-Nestjs主要功能-守卫.html"><strong aria-hidden="true">11.7.</strong> 03.4-Nestjs 主要功能-守卫</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/03.5-Nestjs主要功能-拦截器.html"><strong aria-hidden="true">11.8.</strong> 03.5-Nestjs 主要功能-拦截器</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/04.1-Nestjs业务扩展-配置管理.html"><strong aria-hidden="true">11.9.</strong> 04.1-Nestjs 业务扩展-配置管理</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/04.2-Nestjs业务扩展-日志.html"><strong aria-hidden="true">11.10.</strong> 04.2-Nestjs 业务扩展-日志</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/04.3-Nestjs业务扩展-校验与认证.html"><strong aria-hidden="true">11.11.</strong> 04.3-Nestjs 业务扩展-校验与认证</a></li><li class="chapter-item expanded "><a href="../09-后端框架-Nest/05.1-Nestjs项目优化.html"><strong aria-hidden="true">11.12.</strong> 05.1-Nestjs 项目优化</a></li></ol></li><li class="chapter-item expanded "><a href="../10-前端之禅/index.html"><strong aria-hidden="true">12.</strong> 10-前端之禅</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../10-前端之禅/01.1-内存管理-垃圾回收算法.html"><strong aria-hidden="true">12.1.</strong> 01.1-内存管理-垃圾回收算法</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/01.2-内存管理-内存泄露与管理.html"><strong aria-hidden="true">12.2.</strong> 01.2-内存管理-内存泄露与管理</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/01.3-内存管理-V8引擎与分代回收.html"><strong aria-hidden="true">12.3.</strong> 01.3-内存管理-V8 引擎与分代回收</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/02.1-浏览器-渲染流程.html"><strong aria-hidden="true">12.4.</strong> 02.1-浏览器-渲染流程</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/02.2-浏览器-缓存机制.html"><strong aria-hidden="true">12.5.</strong> 02.2-浏览器-缓存机制</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/03.1-性能优化-优化汇总.html"><strong aria-hidden="true">12.6.</strong> 03.1-性能优化-优化汇总</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/03.2-性能优化-代码优化示例.html"><strong aria-hidden="true">12.7.</strong> 03.2-性能优化-代码优化示例</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/04.1-前后分离-SEO.html"><strong aria-hidden="true">12.8.</strong> 04.1-前后分离-SEO</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/04.2-前后分离-CSR与SSR.html"><strong aria-hidden="true">12.9.</strong> 04.2-前后分离-CSR 与 SSR</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/05.1-接口规范-REST.html"><strong aria-hidden="true">12.10.</strong> 05.1-接口规范-REST</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/05.2-接口规范-GraphQL.html"><strong aria-hidden="true">12.11.</strong> 05.2-接口规范-GraphQL</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/06.1-编程思想-函数式编程.html"><strong aria-hidden="true">12.12.</strong> 06.1-编程思想-函数式编程</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/06.2-编程思想-依赖注入与控制反转.html"><strong aria-hidden="true">12.13.</strong> 06.2-编程思想-依赖注入与控制反转</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/06.3-编程思想-可维护性.html"><strong aria-hidden="true">12.14.</strong> 06.3-编程思想-可维护性</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/07.1-Web安全.html"><strong aria-hidden="true">12.15.</strong> 07.1-Web 安全</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/08.1-常见服务-OAuth2授权.html"><strong aria-hidden="true">12.16.</strong> 08.1-常见服务-OAuth2 授权</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/09.1-微前端架构.html"><strong aria-hidden="true">12.17.</strong> 09.1-微前端架构</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/10.1-软件测试.html"><strong aria-hidden="true">12.18.</strong> 10.1-软件测试</a></li><li class="chapter-item expanded "><a href="../10-前端之禅/11.1-持续集成.html"><strong aria-hidden="true">12.19.</strong> 11.1-持续集成</a></li></ol></li><li class="chapter-item expanded "><a href="../附录-Canvas/index.html"><strong aria-hidden="true">13.</strong> 附录-Canvas</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../附录-Canvas/01.1-Canvas简单使用.html"><strong aria-hidden="true">13.1.</strong> 01.1-Canvas 简单使用</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/02.1-2d绘图环境-基本图形绘制.html"><strong aria-hidden="true">13.2.</strong> 02.1-2d 绘图环境-基本图形绘制</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/02.2-2d绘图环境-变换、阴影、渐变.html"><strong aria-hidden="true">13.3.</strong> 02.2-2d 绘图环境-变换、阴影、渐变</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/02.3-2d绘图环境-图片基础操作.html"><strong aria-hidden="true">13.4.</strong> 02.3-2d 绘图环境-图片基础操作</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/03.1-图形绘制-线段绘制.html"><strong aria-hidden="true">13.5.</strong> 03.1-图形绘制-线段绘制</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/03.2-图形绘制-圆形绘制.html"><strong aria-hidden="true">13.6.</strong> 03.2-图形绘制-圆形绘制</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/03.3-图形绘制-贝塞尔曲线.html"><strong aria-hidden="true">13.7.</strong> 03.3-图形绘制-贝塞尔曲线</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/03.4-图形绘制-多边形绘制.html"><strong aria-hidden="true">13.8.</strong> 03.4-图形绘制-多边形绘制</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/03.5-图形绘制-坐标变换.html"><strong aria-hidden="true">13.9.</strong> 03.5-图形绘制-坐标变换</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/03.5-图形绘制-高级路径操作.html"><strong aria-hidden="true">13.10.</strong> 03.5-图形绘制-高级路径操作</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/04.1-图片操作-绘制图片.html"><strong aria-hidden="true">13.11.</strong> 04.1-图片操作-绘制图片</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/04.2-图片操作-离屏canvas.html"><strong aria-hidden="true">13.12.</strong> 04.2-图片操作-离屏 canvas</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/04.3-图片操作-操作像素.html"><strong aria-hidden="true">13.13.</strong> 04.3-图片操作-操作像素</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/04.4-图片操作-滤镜操作.html"><strong aria-hidden="true">13.14.</strong> 04.4-图片操作-滤镜操作</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/04.5-图片操作-图像制作动画.html"><strong aria-hidden="true">13.15.</strong> 04.5-图片操作-图像制作动画</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/04.6-图片操作-安全与性能.html"><strong aria-hidden="true">13.16.</strong> 04.6-图片操作-安全与性能</a></li><li class="chapter-item expanded "><a href="../附录-Canvas/05.1-视频处理.md.html"><strong aria-hidden="true">13.17.</strong> 05.1-视频处理.md</a></li></ol></li><li class="chapter-item expanded "><a href="../附录-Electron/index.html"><strong aria-hidden="true">14.</strong> 附录-Electron</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../附录-Electron/01.1-Elecron简介.html"><strong aria-hidden="true">14.1.</strong> 01.1-Elecron 简介</a></li><li class="chapter-item expanded "><a href="../附录-Electron/02.1-Electron进程.html"><strong aria-hidden="true">14.2.</strong> 02.1-Electron 进程</a></li><li class="chapter-item expanded "><a href="../附录-Electron/03.1-Electron数据存储.html"><strong aria-hidden="true">14.3.</strong> 03.1-Electron 数据存储</a></li><li class="chapter-item expanded "><a href="../附录-Electron/04.1-Electron通信.html"><strong aria-hidden="true">14.4.</strong> 04.1-Electron 通信</a></li><li class="chapter-item expanded "><a href="../附录-Electron/05.1-Electron界面.html"><strong aria-hidden="true">14.5.</strong> 05.1-Electron 界面</a></li><li class="chapter-item expanded "><a href="../附录-Electron/06.1-Electron窗口.html"><strong aria-hidden="true">14.6.</strong> 06.1-Electron 窗口</a></li><li class="chapter-item expanded "><a href="../附录-Electron/07.1-Electron交互-与系统交互.html"><strong aria-hidden="true">14.7.</strong> 07.1-Electron 交互-与系统交互</a></li><li class="chapter-item expanded "><a href="../附录-Electron/07.2-Electron交互-与硬件交互.html"><strong aria-hidden="true">14.8.</strong> 07.2-Electron 交互-与硬件交互</a></li><li class="chapter-item expanded "><a href="../附录-Electron/08.1-Electron安全问题.html"><strong aria-hidden="true">14.9.</strong> 08.1-Electron 安全问题</a></li><li class="chapter-item expanded "><a href="../附录-Electron/09.1-Electron测试.html"><strong aria-hidden="true">14.10.</strong> 09.1-Electron 测试</a></li><li class="chapter-item expanded "><a href="../附录-Electron/10.1-Electron应用发版.html"><strong aria-hidden="true">14.11.</strong> 10.1-Electron 应用发版</a></li><li class="chapter-item expanded "><a href="../附录-Electron/11.1-Electron优化.html"><strong aria-hidden="true">14.12.</strong> 11.1-Electron 优化</a></li></ol></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/index.html"><strong aria-hidden="true">15.</strong> 附录-HTML 与 CSS</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../附录-HTML与CSS/01.1-HTML-HTML概念.html"><strong aria-hidden="true">15.1.</strong> 01.1-HTML-HTML 概念</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/01.2-HTML-H5的变化.html"><strong aria-hidden="true">15.2.</strong> 01.2-HTML-H5 的变化</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/01.3-HTML-常见标签.html"><strong aria-hidden="true">15.3.</strong> 01.3-HTML-常见标签</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/01.4-HTML-表单标签.html"><strong aria-hidden="true">15.4.</strong> 01.4-HTML-表单标签</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/02.1-CSS基础-CSS基本使用.html"><strong aria-hidden="true">15.5.</strong> 02.1-CSS 基础-CSS 基本使用</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/02.2-CSS基础-选择器.html"><strong aria-hidden="true">15.6.</strong> 02.2-CSS 基础-选择器</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/02.3-CSS基础-文字与文本.html"><strong aria-hidden="true">15.7.</strong> 02.3-CSS 基础-文字与文本</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/02.4-CSS基础-背景与颜色.html"><strong aria-hidden="true">15.8.</strong> 02.4-CSS 基础-背景与颜色</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/02.5-CSS基础-层叠性与继承性.html"><strong aria-hidden="true">15.9.</strong> 02.5-CSS 基础-层叠性与继承性</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/03.1-盒模型-盒模型使用.html"><strong aria-hidden="true">15.10.</strong> 03.1-盒模型-盒模型使用</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/03.2-盒模型-元素转换.html"><strong aria-hidden="true">15.11.</strong> 03.2-盒模型-元素转换</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/04.1-布局技术-浮动与BFC.html"><strong aria-hidden="true">15.12.</strong> 04.1-布局技术-浮动与 BFC</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/04.2-布局技术-定位与层级.html"><strong aria-hidden="true">15.13.</strong> 04.2-布局技术-定位与层级</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/04.3-布局技术-弹性布局.html"><strong aria-hidden="true">15.14.</strong> 04.3-布局技术-弹性布局</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/04.4-布局技术-网格布局.html"><strong aria-hidden="true">15.15.</strong> 04.4-布局技术-网格布局</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/05.1-移动Web-移动Web问题.html"><strong aria-hidden="true">15.16.</strong> 05.1-移动 Web-移动 Web 问题</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/05.2-移动Web-移动端布局方案.html"><strong aria-hidden="true">15.17.</strong> 05.2-移动 Web-移动端布局方案</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/05.3-移动Web-rem适配.html"><strong aria-hidden="true">15.18.</strong> 05.3-移动 Web-rem 适配</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/05.4-移动Web-流式布局.html"><strong aria-hidden="true">15.19.</strong> 05.4-移动 Web-流式布局</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/05.5-移动Web-栅格布局.html"><strong aria-hidden="true">15.20.</strong> 05.5-移动 Web-栅格布局</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/05.6-移动Web-移动网页示例.html"><strong aria-hidden="true">15.21.</strong> 05.6-移动 Web-移动网页示例</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/06.1-基础效果-渐变.html"><strong aria-hidden="true">15.22.</strong> 06.1-基础效果-渐变</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/06.2-基础效果-阴影.html"><strong aria-hidden="true">15.23.</strong> 06.2-基础效果-阴影</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/07.1-CSS3特效-过渡.html"><strong aria-hidden="true">15.24.</strong> 07.1-CSS3 特效-过渡</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/07.2-CSS3特效-2D转换.html"><strong aria-hidden="true">15.25.</strong> 07.2-CSS3 特效-2D 转换</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/07.3-CSS3特效-3D转换.html"><strong aria-hidden="true">15.26.</strong> 07.3-CSS3 特效-3D 转换</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/07.4-CSS3特效-动画.html"><strong aria-hidden="true">15.27.</strong> 07.4-CSS3 特效-动画</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/07.5-CSS3特效-性能问题.html"><strong aria-hidden="true">15.28.</strong> 07.5-CSS3 特效-性能问题</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/08.1-CSS实践-规范与实践.html"><strong aria-hidden="true">15.29.</strong> 08.1-CSS 实践-规范与实践</a></li><li class="chapter-item expanded "><a href="../附录-HTML与CSS/08.2-CSS实践-2-可见性与居中.html"><strong aria-hidden="true">15.30.</strong> 08.2-CSS 实践-2-可见性与居中</a></li></ol></li><li class="chapter-item expanded "><a href="../附录-函数式编程/index.html"><strong aria-hidden="true">16.</strong> 附录-函数式编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../附录-函数式编程/01.1-编程思想-声明式与命令式.html"><strong aria-hidden="true">16.1.</strong> 01.1-编程思想-声明式与命令式</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/01.2-编程思想-函数式编程范式.html"><strong aria-hidden="true">16.2.</strong> 01.2-编程思想-函数式编程范式</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.1-函数式实现-lambda.html"><strong aria-hidden="true">16.3.</strong> 02.1-函数式实现-lambda</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.2-函数式实现-柯里化函数.html"><strong aria-hidden="true">16.4.</strong> 02.2-函数式实现-柯里化函数</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.3-函数式实现-偏函数.html"><strong aria-hidden="true">16.5.</strong> 02.3-函数式实现-偏函数</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.4-函数式实现-组合函数.html"><strong aria-hidden="true">16.6.</strong> 02.4-函数式实现-组合函数</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.5-函数式实现-管道.html"><strong aria-hidden="true">16.7.</strong> 02.5-函数式实现-管道</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.6-函数式实现-函子.html"><strong aria-hidden="true">16.8.</strong> 02.6-函数式实现-函子</a></li><li class="chapter-item expanded "><a href="../附录-函数式编程/02.7-函数式实现-Monad函子.html"><strong aria-hidden="true">16.9.</strong> 02.7-函数式实现-Monad 函子</a></li></ol></li><li class="chapter-item expanded "><a href="../附录-设计模式/index.html"><strong aria-hidden="true">17.</strong> 附录-设计模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../附录-设计模式/01.1-单例模式.html"><strong aria-hidden="true">17.1.</strong> 01.1-单例模式</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Over javascript</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="053-dom-基础-dom-事件"><a class="header" href="#053-dom-基础-dom-事件">05.3-DOM 基础-DOM 事件</a></h1>
+<h2 id="一-事件的基本概念"><a class="header" href="#一-事件的基本概念">一 事件的基本概念</a></h2>
+<p>浏览器中的 JS 是以事件驱动为核心的一门语言，事件即是可以被 JavaScript 侦测到的行为，是一种触发-响应机制。</p>
+<p>网页中的每个元素都可以通过行为触发相应的事件，如：点击按钮--&gt;产生事件---&gt;执行操作。</p>
+<p>事件的三要素是：事件源、事件、事件处理程序，如下所示：</p>
+<pre><code class="language-js">let btn = document.querySelector('#btn')
+
+// btn 为事件源、click 为事件，绑定的函数为事件处理程序
+btn.onclick = function () {
+  console.log('btn 被点击了')
+}
+</code></pre>
+<p>事件的触发一般对应 on 前缀开头，常见事件有：</p>
+<pre><code class="language-txt">click       鼠标单击
+dbclick     鼠标双击
+mouseover   鼠标悬停
+mouseout    鼠标移除
+change      文本内容或下拉菜单中的选项发生改变
+keyup       按下并释放键盘上的一个健
+focus       获得焦点
+blur        失去焦点
+load        网页文档加载事件
+unload      关闭网页时
+submit      表单提交事件
+reset       重置表单时
+
+贴士：
+mouseover/mouseout：会触发多次，每遇到一个子元素就会触发一次。
+mouseenter/mouseleave：只会触发一次。
+</code></pre>
+<p>事件函数中的 this 代表调用者本身：</p>
+<pre><code class="language-js">btn.onclick = function () {
+  // btn.disabled = true;
+  this.disabled = true // 作用同上
+}
+</code></pre>
+<h2 id="二-事件绑定与取消"><a class="header" href="#二-事件绑定与取消">二 事件绑定与取消</a></h2>
+<h3 id="21-dom0-和-dom2-级事件绑定与取消"><a class="header" href="#21-dom0-和-dom2-级事件绑定与取消">2.1 DOM0 和 DOM2 级事件绑定与取消</a></h3>
+<p>有两种事件绑定方式：</p>
+<pre><code class="language-js">// DOM0 级事件绑定方式：多次绑定会覆盖前一次事件执行函数
+obj.onclick = function () {} // 绑定事件
+obj.onclick = function () {} // 再次绑定会覆盖前者
+obj.onclick = null // 取消绑定
+
+// DOM2 级事件绑定方式（监听）：多次绑定多不会覆盖前一次事件执行函数，多个函数会依次触发
+obj.addEventListener('click', function () {}, false) // 绑定事件
+obj.removeEventListener('click', function () {}, false) // 取消绑定
+</code></pre>
+<h3 id="22-ie8-中的事件绑定与取消"><a class="header" href="#22-ie8-中的事件绑定与取消">2.2 IE8 中的事件绑定与取消</a></h3>
+<p>现在的主流浏览器都已经支持 DOM2 级事件，但是 IE8 不支持，而是实现了类似的两个方法：<code>attachEvent()/detachEvent()</code></p>
+<pre><code class="language-js">// 只有两个参数：参数一为事件，带 on；参数二为事件处理函数，但是该函数在全局作用域运行！！！，即其 this 为 window
+// 多次绑定会按照相反的顺序执行！！！
+// 这 2 个事件只支持事件冒泡！！！
+obj.attachEvent('onclick', function () {
+  console.log(this === window) // true
+})
+</code></pre>
+<h3 id="23-兼容工具"><a class="header" href="#23-兼容工具">2.3 兼容工具</a></h3>
+<p>下面的工具类可以做到兼容：</p>
+<pre><code class="language-js">let EventUtil = {
+  addHandler: function (element, type, handler) {
+    if (element.addEventListener) {
+      element.addEventListener(type, handler, false)
+      return
+    }
+
+    if (element.attachEvent) {
+      element.attachEvent('on' + type, handler)
+      return
+    }
+
+    element['on' + type] = handler
+  },
+  removeHandler: function (element, type, handler) {
+    if (element.removeEventListener) {
+      element.addEventListener(type, handler, false)
+      return
+    }
+
+    if (element.detacheEvent) {
+      element.detacheEvent('on' + type, handler)
+      handler.call(element)
+      return
+    }
+
+    element['on' + type] = null
+  },
+}
+</code></pre>
+<h2 id="三-事件对象"><a class="header" href="#三-事件对象">三 事件对象</a></h2>
+<p>当一个事件发生时，事件的详细信息（属性、方法）都会保存到一个对象中，这个事件对象即 event 对象。</p>
+<pre><code class="language-html">&lt;div id=&quot;div&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+  let div = document.querySelector('#div')
+  div.onclick = function (e) {
+    console.log(e)
+  }
+&lt;/script&gt;
+</code></pre>
+<p>只有在事件处理程序执行期间，event 对象才会存在；一旦事件处理程序执行完成，event 对象就会被销毁。</p>
+<p>事件对象仍然有兼容问题，IE8 中，事件对象直接位于 window 中！兼容的写法如下：</p>
+<pre><code class="language-js">// 事件处理函数
+function(e){
+  e = e || window.event
+}
+</code></pre>
+<p><img src="../images/dom/03.png" alt="常见事件对象属性" /></p>
+<p>兼容事件对象：</p>
+<pre><code class="language-js">const EventUtil = {
+  addHandler: function (element, type, handler) {
+    // 为节省版面，删除了之前的代码
+  },
+  getEvent: function (event) {
+    return event ? event : window.event
+  },
+  getTarget: function (event) {
+    return event.target || event.srcElement
+  },
+  preventDefault: function (event) {
+    if (event.preventDefault) {
+      event.preventDefault()
+    } else {
+      event.returnValue = false
+    }
+  },
+  removeHandler: function (element, type, handler) {
+    // 为节省版面，删除了之前的代码
+  },
+  stopPropagation: function (event) {
+    if (event.stopPropagation) {
+      event.stopPropagation()
+    } else {
+      event.cancelBubble = true
+    }
+  },
+}
+</code></pre>
+<h2 id="四-事件调用者"><a class="header" href="#四-事件调用者">四 事件调用者</a></h2>
+<p>在事件处理程序内部，this 其实是绑定事件的对象，即 <code>e.currentTarget</code>，而 <code>e.target</code> 则是触发事件的真实对象。</p>
+<pre><code class="language-html">&lt;div id=&quot;div&quot;&gt;
+  &lt;div id=&quot;div1&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;div2&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  let div = document.querySelector('#div1')
+  div.onclick = function (e) {
+    e = e || window.event
+    // 本处示例点击 div1
+    console.log(e.target === document.querySelector('#div1')) // true
+    console.log(e.currentTarget === this) // true
+    console.log(e.target === this) // false
+  }
+&lt;/script&gt;
+</code></pre>
+<h2 id="五-阻止事件的默认行为"><a class="header" href="#五-阻止事件的默认行为">五 阻止事件的默认行为</a></h2>
+<p>当一个事件发生时，浏览器会默认做一些事情，比如点击链接就会发生跳转，这些默认行为也是可以阻止的：</p>
+<ul>
+<li>方式一：适用于 on 方式绑定的事件函数，在事件处理函数中使用 <code>return false</code></li>
+<li>方式二：如果事件是以 addEventListner 绑定，那么在事件处理函数中添加：<code>event.preventDefault();</code></li>
+</ul>
+<p>注意：只有事件的 cancelable 属性为 true，才能使用 <code>preventDefault()</code> 方法取消默认行为。</p>
+<h2 id="六-事件模拟"><a class="header" href="#六-事件模拟">六 事件模拟</a></h2>
+<h3 id="61-dom-事件模拟概述"><a class="header" href="#61-dom-事件模拟概述">6.1 DOM 事件模拟概述</a></h3>
+<p>可以通过 JavaScript 在任何时候触发任意事件，而这些事件会被当成浏览器创建的事件。这意味着同样会有事件冒泡，因而也会触发相应的事件处理程序。这种能力在测试 Web 应用时特别有用。 DOM3 规范指明了模拟特定类型事件的方式。</p>
+<p>document.createEvent()方法可以创建一个 event 对象。这个方法接收一个参数，此参数是一个表示要创建事件类型的字符串。在 DOM2 中，所有这些字符串都是英文复数形式，但在 DOM3 中，又把它们改成了英文单数形式。可用的字符串值是以下值之一。</p>
+<ul>
+<li>&quot;UIEvents&quot;（ DOM3 中是&quot;UIEvent&quot;）：通用用户界面事件（鼠标事件和键盘事件都继承自这个事件）。</li>
+<li>&quot;MouseEvents&quot;（ DOM3 中是&quot;MouseEvent&quot;）：通用鼠标事件。</li>
+<li>&quot;HTMLEvents&quot;（ DOM3 中没有）：通用 HTML 事件（ HTML 事件已经分散到了其他事件大类中）</li>
+</ul>
+<p>注意，键盘事件不是在 DOM2 Events 中规定的，而是后来在 DOM3 Events 中增加的。</p>
+<p>创建 event 对象之后，需要使用事件相关的信息来初始化。每种类型的 event 对象都有特定的方法，可以使用相应数据来完成初始化。方法的名字并不相同，这取决于调用 createEvent()时传入的参数。</p>
+<p>事件模拟的最后一步是触发事件。为此要使用 dispatchEvent()方法，这个方法存在于所有支持事件的 DOM 节点之上。 dispatchEvent()方法接收一个参数，即表示要触发事件的 event 对象。调用 dispatchEvent()方法之后，事件就“转正”了，接着便冒泡并触发事件处理程序执行。</p>
+<h3 id="62-模拟鼠标事件"><a class="header" href="#62-模拟鼠标事件">6.2 模拟鼠标事件</a></h3>
+<p>模拟鼠标事件需要先创建一个新的鼠标 event 对象，然后再使用必要的信息对其进行初始化。要创建鼠标 event 对象，可以调用 createEvent()方法并传入&quot;MouseEvents&quot;参数。这样就会返回一个 event 对象，这个对象有一个 initMouseEvent()方法，用于为新对象指定鼠标的特定信息。</p>
+<p>initMouseEvent()方法接收 15 个参数，分别对应鼠标事件会暴露的属性。这些参数列举如下：</p>
+<ul>
+<li>type（字符串）：要触发的事件类型，如&quot;click&quot;。</li>
+<li>bubbles（布尔值）：表示事件是否冒泡。为精确模拟鼠标事件，应该设置为 true。</li>
+<li>cancelable（布尔值）：表示事件是否可以取消。为精确模拟鼠标事件，应该设置为 true。</li>
+<li>view（ AbstractView）：与事件关联的视图。基本上始终是 document.defaultView。</li>
+<li>detail（整数）：关于事件的额外信息。只被事件处理程序使用，通常为 0。</li>
+<li>screenX（整数）：事件相对于屏幕的 x 坐标。</li>
+<li>screenY（整数）：事件相对于屏幕的 y 坐标。</li>
+<li>clientX（整数）：事件相对于视口的 x 坐标。</li>
+<li>clientY（整数）：事件相对于视口的 y 坐标。</li>
+<li>ctrlkey（布尔值）：表示是否按下了 Ctrl 键。默认为 false。</li>
+<li>altkey（布尔值）：表示是否按下了 Alt 键。默认为 false。</li>
+<li>shiftkey（布尔值）：表示是否按下了 Shift 键。默认为 false。</li>
+<li>metakey（布尔值）：表示是否按下了 Meta 键。默认为 false。</li>
+<li>button（整数）：表示按下了哪个按钮。默认为 0。</li>
+<li>relatedTarget（对象）：与事件相关的对象。只在模拟 mouseover 和 mouseout 时使用。</li>
+</ul>
+<p>显然， initMouseEvent()方法的这些参数与鼠标事件的 event 对象属性是一一对应的。前 4 个参数是正确模拟事件唯一重要的几个参数，这是因为它们是浏览器要用的，其他参数则是事件处理程序要用的。 event 对象的 target 属性会自动设置为调用 dispatchEvent()方法时传入的节点。下面来看一个使用默认值模拟单击事件的例子：</p>
+<pre><code class="language-js">let btn = document.getElementById('myBtn')
+// 创建 event 对象
+let event = document.createEvent('MouseEvents')
+// 初始化 event 对象
+event.initMouseEvent(
+  'click',
+  true,
+  true,
+  document.defaultView,
+  0,
+  0,
+  0,
+  0,
+  0,
+  false,
+  false,
+  false,
+  false,
+  0,
+  null
+)
+// 触发事件
+btn.dispatchEvent(event)
+</code></pre>
+<p>所有鼠标事件，包括 dblclick 都可以像这样在 DOM 合规的浏览器中模拟出来。</p>
+<h3 id="63-模拟键盘事件"><a class="header" href="#63-模拟键盘事件">6.3 模拟键盘事件</a></h3>
+<p>DOM2 Events 中没有定义键盘事件，因此模拟键盘事件并不直观。键盘事件曾在 DOM2 Events 的草案中提到过，但最终成为推荐标准前又被删掉了。要注意的是， DOM3 Events 中定义的键盘事件与 DOM2 Events 草案最初定义的键盘事件差别很大。</p>
+<p>在 DOM3 中创建键盘事件的方式是给 createEvent()方法传入参数&quot;KeyboardEvent&quot;。这样会返回一个 event 对象，这个对象有一个 initKeyboardEvent()方法。这个方法接收以下参数。</p>
+<ul>
+<li>type（字符串）：要触发的事件类型，如&quot;keydown&quot;。</li>
+<li>bubbles（布尔值）：表示事件是否冒泡。为精确模拟键盘事件，应该设置为 true。</li>
+<li>cancelable（布尔值）：表示事件是否可以取消。为精确模拟键盘事件，应该设置为 true。</li>
+<li>view（ AbstractView）：与事件关联的视图。基本上始终是 document.defaultView。</li>
+<li>key（字符串）：按下按键的字符串代码。</li>
+<li>location（整数）：按下按键的位置。 0 表示默认键， 1 表示左边， 2 表示右边， 3 表示数字键盘，4 表示移动设备（虚拟键盘）， 5 表示游戏手柄。</li>
+<li>modifiers（字符串）：空格分隔的修饰键列表，如&quot;Shift&quot;。</li>
+<li>repeat（整数）：连续按了这个键多少次</li>
+</ul>
+<p>注意， DOM3 Events 废弃了 keypress 事件，因此只能通过上述方式模拟 keydown 和 keyup 事件：</p>
+<pre><code class="language-js">let textbox = document.getElementById('myTextbox'),
+  event
+// 按照 DOM3 的方式创建 event 对象
+if (document.implementation.hasFeature('KeyboardEvents', '3.0')) {
+  event = document.createEvent('KeyboardEvent')
+  // 初始化 event 对象
+  event.initKeyboardEvent(
+    'keydown',
+    true,
+    true,
+    document.defaultView,
+    'a',
+    0,
+    'Shift',
+    0
+  )
+}
+// 触发事件
+textbox.dispatchEvent(event)
+</code></pre>
+<p>这个例子模拟了同时按住 Shift 键和键盘上 A 键的 keydown 事件。在使用 document.createEvent(&quot;KeyboardEvent&quot;)之前，最好检测一下浏览器对 DOM3 键盘事件的支持情况，其他浏览器会返回非标准的 KeyboardEvent 对象。</p>
+<p>Firefox 允许给 createEvent()传入&quot;KeyEvents&quot;来创建键盘事件。这时候返回的 event 对象包含的方法叫 initKeyEvent()，此方法接收以下 10 个参数。</p>
+<ul>
+<li>type（字符串）：要触发的事件类型，如&quot;keydown&quot;。</li>
+<li>bubbles（布尔值）：表示事件是否冒泡。为精确模拟键盘事件，应该设置为 true。</li>
+<li>cancelable（布尔值）：表示事件是否可以取消。为精确模拟键盘事件，应该设置为 true。</li>
+<li>view（ AbstractView）：与事件关联的视图，基本上始终是 document.defaultView。</li>
+<li>ctrlkey（布尔值）：表示是否按下了 Ctrl 键。默认为 false。</li>
+<li>altkey（布尔值）：表示是否按下了 Alt 键。默认为 false。</li>
+<li>shiftkey（布尔值）：表示是否按下了 Shift 键。默认为 false。</li>
+<li>metakey（布尔值）：表示是否按下了 Meta 键。默认为 false。</li>
+<li>keyCode（整数）：表示按下或释放键的键码。在 keydown 和 keyup 中使用。默认为 0。</li>
+<li>charCode（整数）：表示按下键对应字符的 ASCII 编码。在 keypress 中使用。默认为 0</li>
+</ul>
+<p>键盘事件也可以通过调用 dispatchEvent()并传入 event 对象来触发，比如：</p>
+<pre><code class="language-js">// 仅适用于 Firefox
+let textbox = document.getElementById('myTextbox')
+// 创建 event 对象
+let event = document.createEvent('KeyEvents')
+// 初始化 event 对象
+event.initKeyEvent(
+  'keydown',
+  true,
+  true,
+  document.defaultView,
+  false,
+  false,
+  true,
+  false,
+  65,
+  65
+)
+// 触发事件
+textbox.dispatchEvent(event)
+</code></pre>
+<p>这个例子模拟了同时按住 Shift 键和键盘上 A 键的 keydown 事件。同样也可以像这样模拟 keyup 和 keypress 事件。</p>
+<p>对于其他浏览器，需要创建一个通用的事件，并为其指定特定于键盘的信息，如下面的例子所示：</p>
+<pre><code class="language-js">let textbox = document.getElementById('myTextbox')
+// 创建 event 对象
+let event = document.createEvent('Events')
+// 初始化 event 对象
+event.initEvent(type, bubbles, cancelable)
+event.view = document.defaultView
+event.altKey = false
+event.ctrlKey = false
+event.shiftKey = false
+event.metaKey = false
+event.keyCode = 65
+event.charCode = 65
+// 触发事件
+textbox.dispatchEvent(event)
+</code></pre>
+<p>以上代码创建了一个通用事件，然后使用 initEvent()方法初始化，接着又为它指定了键盘事件信息。这里必须使用通用事件而不是用户界面事件，因为用户界面事件不允许直接给 event 对象添加属性（ Safari 例外）。像这样模拟一个事件虽然会触发键盘事件，但文本框中不会输入任何文本，因为它并不能准确模拟键盘事件。</p>
+<h3 id="64-模拟其他事件"><a class="header" href="#64-模拟其他事件">6.4 模拟其他事件</a></h3>
+<p>鼠标事件和键盘事件是浏览器中最常见的模拟对象。不过，有时候可能也需要模拟 HTML 事件。模拟 HTML 事件要调用 createEvent()方法并传入&quot;HTMLEvents&quot;， 然后再使用返回对象的 initEvent()方法来初始化：</p>
+<pre><code class="language-js">let event = document.createEvent('HTMLEvents')
+event.initEvent('focus', true, false)
+target.dispatchEvent(event)
+</code></pre>
+<p>这个例子模拟了在给定目标上触发 focus 事件。其他 HTML 事件也可以像这样来模拟。</p>
+<h3 id="65-自定义-dom-事件"><a class="header" href="#65-自定义-dom-事件">6.5 自定义 DOM 事件</a></h3>
+<p>DOM3 增加了自定义事件的类型。自定义事件不会触发原生 DOM 事件，但可以让开发者定义自己的事件 。 要创建自定义事件，需要调用 createEvent(&quot;CustomEvent&quot;) 。 返回的对象包含 initCustomEvent()方法，该方法接收以下 4 个参数：</p>
+<ul>
+<li>type（字符串）：要触发的事件类型，如&quot;myevent&quot;。</li>
+<li>bubbles（布尔值）：表示事件是否冒泡。</li>
+<li>cancelable（布尔值）：表示事件是否可以取消。</li>
+<li>detail（对象）：任意值。作为 event 对象的 detail 属性。</li>
+</ul>
+<p>自定义事件可以像其他事件一样在 DOM 中派发，比如：</p>
+<pre><code class="language-js">let div = document.getElementById('myDiv'),
+  event
+div.addEventListener('myevent', (event) =&gt; {
+  console.log('DIV: ' + event.detail)
+})
+document.addEventListener('myevent', (event) =&gt; {
+  console.log('DOCUMENT: ' + event.detail)
+})
+if (document.implementation.hasFeature('CustomEvents', '3.0')) {
+  event = document.createEvent('CustomEvent')
+  event.initCustomEvent('myevent', true, false, 'Hello world!')
+  div.dispatchEvent(event)
+}
+</code></pre>
+<p>这个例子创建了一个名为&quot;myevent&quot;的冒泡事件。 event 对象的 detail 属性就是一个简单的字符串， <code>&lt;div&gt;</code> 元素和 document 都为这个事件注册了事件处理程序。因为使用 initCustomEvent()初始化时将事件指定为可以冒泡，所以浏览器会负责把事件冒泡到 document。</p>
+<h3 id="66-ie8-事件模拟"><a class="header" href="#66-ie8-事件模拟">6.6 IE8 事件模拟</a></h3>
+<p>在 IE8 及更早版本中模拟事件的过程与 DOM 方式类似：创建 event 对象，指定相应信息，然后使用这个对象触发。当然， IE 实现每一步的方式都不一样。</p>
+<p>首先，要使用 document 对象的 createEventObject()方法来创建 event 对象。与 DOM 不同，这个方法不接收参数，返回一个通用 event 对象。然后，可以手工给返回的对象指定希望该对象具备的所有属性。（没有初始化方法。）最后一步是在事件目标上调用 fireEvent()方法，这个方法接收两个参数：事件处理程序的名字和 event 对象。调用 fireEvent()时， srcElement 和 type 属性会自动指派到 event 对象（其他所有属性必须手工指定）。这意味着 IE 支持的所有事件都可以通过相同的方式来模拟。例如，下面的代码在一个按钮上模拟了 click 事件：</p>
+<pre><code class="language-js">var btn = document.getElementById('myBtn')
+// 创建 event 对象
+var event = document.createEventObject()
+/// 初始化 event 对象
+event.screenX = 100
+event.screenY = 0
+event.clientX = 0
+event.clientY = 0
+event.ctrlKey = false
+event.altKey = false
+event.shiftKey = false
+event.button = 0
+// 触发事件
+btn.fireEvent('onclick', event)
+</code></pre>
+<p>这个例子先创建 event 对象，然后用相关信息对其进行了初始化。注意，这里可以指定任何属性，包括 IE8 及更早版本不支持的属性。这些属性的值对于事件来说并不重要，因为只有事件处理程序才会使用它们。</p>
+<p>同样的方式也可以用来模拟 keypress 事件，如下面的例子所示：</p>
+<pre><code class="language-js">var textbox = document.getElementById('myTextbox')
+// 创建 event 对象
+var event = document.createEventObject()
+// 初始化 event 对象
+event.altKey = false
+event.ctrlKey = false
+event.shiftKey = false
+event.keyCode = 65
+// 触发事件
+textbox.fireEvent('onkeypress', event)
+</code></pre>
+<p>由于鼠标事件、键盘事件或其他事件的 event 对象并没有区别，因此使用通用的 event 对象可以触发任何类型的事件。注意，与 DOM 方式模拟键盘事件一样，这里模拟的 keypress 虽然会触发，但文本框中也不会出现字符。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../03-BOM与DOM编程/05.2-DOM基础-元素的增删改查.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../03-BOM与DOM编程/05.4-DOM基础-事件流.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../03-BOM与DOM编程/05.2-DOM基础-元素的增删改查.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../03-BOM与DOM编程/05.4-DOM基础-事件流.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
